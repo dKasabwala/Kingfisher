@@ -66,7 +66,7 @@ public enum DiskStorage {
                     create: true)
             }
 
-            let cacheName = "com.onevcat.Kingfisher.ImageCache.\(config.name)"
+            let cacheName = config.name
             directoryURL = config.cachePathBlock(url, cacheName)
 
             metaChangingQueue = DispatchQueue(label: cacheName)
@@ -196,7 +196,7 @@ public enum DiskStorage {
         }
 
         func cacheFileName(forKey key: String) -> String {
-            let hashedKey = key.kf.md5
+            let hashedKey = key
             if let ext = config.pathExtension {
                 return "\(hashedKey).\(ext)"
             }
