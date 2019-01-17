@@ -124,7 +124,7 @@ public enum DiskStorage {
         }
 
         func value(forKey key: String, referenceDate: Date, actuallyLoad: Bool) throws -> T? {
-            let fileManager = config.fileManager
+                let fileManager = config.fileManager
             let fileURL = cacheFileURL(forKey: key)
             let filePath = fileURL.path
             guard fileManager.fileExists(atPath: filePath) else {
@@ -140,9 +140,10 @@ public enum DiskStorage {
                     reason: .invalidURLResource(error: error, key: key, url: fileURL))
             }
 
-            if meta.expired(referenceDate: referenceDate) {
-                return nil
-            }
+//            if meta.expired(referenceDate: referenceDate) {
+//                return nil
+//            }
+            
             if !actuallyLoad { return T.empty }
 
             do {

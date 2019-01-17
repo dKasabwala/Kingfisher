@@ -239,11 +239,13 @@ open class ImageCache {
         var diskConfig = DiskStorage.Config(
             name: name,
             sizeLimit: 0,
-            directory: path.flatMap { URL(string: $0) }
+            directory: path.flatMap { URL(fileURLWithPath: $0) }
         )
+        
         if let closure = diskCachePathClosure {
             diskConfig.cachePathBlock = closure
         }
+        
         let diskStorage = try DiskStorage.Backend<Data>(config: diskConfig)
         diskConfig.cachePathBlock = nil
         
@@ -689,8 +691,11 @@ open class ImageCache {
         processorIdentifier identifier: String = DefaultImageProcessor.default.identifier) -> CacheType
     {
         let computedKey = key.computedKey(with: identifier)
-        if memoryStorage.isCached(forKey: computedKey) { return .memory }
-        if diskStorage.isCached(forKey: computedKey) { return .disk }
+        if memoryStorage.isCached(forKey: computedKey) {
+            return .memory }
+        if diskStorage.isCached(forKey: computedKey) {
+            return .disk
+        }
         return .none
     }
     
