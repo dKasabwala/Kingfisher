@@ -621,28 +621,28 @@ open class ImageCache {
     ///                      This `handler` will be called from the main queue.
     open func cleanExpiredDiskCache(completion handler: (() -> Void)? = nil) {
         ioQueue.async {
-            do {
-                var removed: [URL] = []
-                let removedExpired = try self.diskStorage.removeExpiredValues()
-                removed.append(contentsOf: removedExpired)
-
-                let removedSizeExceeded = try self.diskStorage.removeSizeExceededValues()
-                removed.append(contentsOf: removedSizeExceeded)
-
-                if !removed.isEmpty {
-                    DispatchQueue.main.async {
-                        let cleanedHashes = removed.map { $0.lastPathComponent }
-                        NotificationCenter.default.post(
-                            name: .KingfisherDidCleanDiskCache,
-                            object: self,
-                            userInfo: [KingfisherDiskCacheCleanedHashKey: cleanedHashes])
-                    }
-                }
-
+//            do {
+//                var removed: [URL] = []
+//                let removedExpired = try self.diskStorage.removeExpiredValues()
+//                removed.append(contentsOf: removedExpired)
+//
+//                let removedSizeExceeded = try self.diskStorage.removeSizeExceededValues()
+//                removed.append(contentsOf: removedSizeExceeded)
+//
+//                if !removed.isEmpty {
+//                    DispatchQueue.main.async {
+//                        let cleanedHashes = removed.map { $0.lastPathComponent }
+//                        NotificationCenter.default.post(
+//                            name: .KingfisherDidCleanDiskCache,
+//                            object: self,
+//                            userInfo: [KingfisherDiskCacheCleanedHashKey: cleanedHashes])
+//                    }
+//                }
+//
                 if let handler = handler {
                     DispatchQueue.main.async { handler() }
                 }
-            } catch {}
+//            } catch {}
         }
     }
 
